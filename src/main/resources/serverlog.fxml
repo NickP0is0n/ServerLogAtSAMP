@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
@@ -22,6 +23,7 @@
         <Menu mnemonicParsing="false" text="Файл">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#onOpenLogFileMenuItemClick" text="Открыть файл логов оффлайн" />
+                  <MenuItem mnemonicParsing="false" onAction="#onClearSaveDataMenuItemClick" text="Очистить сохраненные данные FTP" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#onExitMenuItemClick" text="Выйти" />
           </items>
@@ -42,7 +44,6 @@
                         <Label layoutX="9.0" layoutY="6.0" text="FTP" />
                         <TextField fx:id="ftpLoginTextField" layoutX="89.0" layoutY="59.0" prefHeight="27.0" prefWidth="136.0" />
                         <Text layoutX="9.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин" />
-                        <TextField fx:id="ftpPasswordTextField" layoutX="89.0" layoutY="94.0" prefHeight="27.0" prefWidth="136.0" />
                         <Text layoutX="9.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" />
                         <TextField fx:id="ftpServerTextField" layoutX="89.0" layoutY="26.0" prefHeight="27.0" prefWidth="136.0" />
                         <Text layoutX="9.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Сервер" />
@@ -55,6 +56,7 @@
                         <Text layoutX="9.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время" />
                         <TextField fx:id="filterContainsTextField" layoutX="89.0" layoutY="224.0" prefHeight="27.0" prefWidth="136.0" />
                         <Text layoutX="9.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Содержит" />
+                        <PasswordField fx:id="ftpPasswordTextField" layoutX="89.0" layoutY="95.0" prefHeight="27.0" prefWidth="136.0" />
                      </children>
                   </AnchorPane>
               </content>

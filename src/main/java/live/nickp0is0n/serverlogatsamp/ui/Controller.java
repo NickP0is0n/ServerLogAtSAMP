@@ -4,10 +4,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,7 +22,7 @@ public class Controller {
     private TextField ftpLoginTextField;
 
     @FXML
-    private TextField ftpPasswordTextField;
+    private PasswordField ftpPasswordTextField;
 
     @FXML
     private TextField ftpServerTextField;
@@ -49,6 +46,7 @@ public class Controller {
     private Text progressBarDescription;
 
     private Log serverLog;
+    private File saveData = new File("savedata");
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
@@ -57,7 +55,14 @@ public class Controller {
 
     @FXML
     void onAboutMenuItemClick(ActionEvent event) {
+        new Alert(Alert.AlertType.INFORMATION, "ServerLog@SAMP\n" +
+                "v2.0\n\n" +
+                "By Mykola \"NickP0is0n\" Chaikovskyi (github.com/NickP0is0n).").showAndWait();
+    }
 
+    @FXML
+    void onClearSaveDataMenuItemClick(ActionEvent event) {
+        if (saveData.exists()) saveData.delete();
     }
 
     @FXML
@@ -178,7 +183,6 @@ public class Controller {
         FTPAccount savedAccount = new FTPAccount(ftpServerTextField.getText(),
                 ftpLoginTextField.getText(),
                 ftpPasswordTextField.getText());
-        File saveData = new File("savedata");
         if (!saveData.exists()) {
             saveData.createNewFile();
         }
