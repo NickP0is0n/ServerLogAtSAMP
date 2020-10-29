@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="live.nickp0is0n.serverlogatsamp.ui.AboutController">
+   <children>
+      <AnchorPane fx:id="appPane" onMouseClicked="#onCloseForm" prefHeight="420.0" prefWidth="600.0" style="-fx-background-color: f9f9f9;">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="156.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
+            <Polygon fill="DODGERBLUE" layoutX="50.0" layoutY="121.0" points="-306.0, 35.0, 550.0, 35.0, 373.0, -63.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Text layoutX="76.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ServerLog">
+               <font>
+                  <Font size="52.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="394.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VERSION">
+               <font>
+                  <Font name="Gill Sans Light" size="22.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="485.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.0">
+               <font>
+                  <Font name="Gill Sans SemiBold" size="22.0" />
+               </font>
+            </Text>
+            <Label layoutX="25.0" layoutY="232.0" prefHeight="54.0" prefWidth="550.0" text="ServerLog@SAMP - удобная программа для просмотра логов от серверов SAMP. Ранее - ServerLog.FX" wrapText="true" />
+            <Label layoutX="25.0" layoutY="156.0" prefHeight="54.0" prefWidth="550.0" text="ServerLog@SAMP 2.0" wrapText="true">
+               <font>
+                  <Font name="Lucida Sans Demibold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="197.0" prefHeight="26.0" prefWidth="550.0" text="Сборка от 29 октября 2020 года." wrapText="true" />
+            <Label layoutX="25.0" layoutY="315.0" prefHeight="54.0" prefWidth="550.0" text="Source code licensed under BSD-3 Clause license. Feel free to use/copy/modify this package as long as you specifying the name of the author." wrapText="true" />
+            <Label layoutX="25.0" layoutY="353.0" prefHeight="54.0" prefWidth="550.0" text="Copyright © 2019 - 2020, Mykola Chaykovskyi All rights reserved." wrapText="true">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Text layoutX="328.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\@SAMP">
+               <font>
+                  <Font name="Tahoma Bold" size="52.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

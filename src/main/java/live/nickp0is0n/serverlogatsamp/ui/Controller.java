@@ -4,10 +4,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import live.nickp0is0n.serverlogatsamp.models.FTPAccount;
 import live.nickp0is0n.serverlogatsamp.models.Log;
 import org.apache.commons.net.ftp.FTPClient;
@@ -54,10 +58,14 @@ public class Controller {
     }
 
     @FXML
-    void onAboutMenuItemClick(ActionEvent event) {
-        new Alert(Alert.AlertType.INFORMATION, "ServerLog@SAMP\n" +
-                "v2.0\n\n" +
-                "By Mykola \"NickP0is0n\" Chaikovskyi (github.com/NickP0is0n).").showAndWait();
+    void onAboutMenuItemClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("about.fxml"));
+        Parent root = loader.load();
+        Stage aboutStage = new Stage();
+        aboutStage.setTitle("О ServerLog@SAMP");
+        aboutStage.setScene(new Scene(root, 600, 400));
+        aboutStage.initStyle(StageStyle.UNDECORATED);
+        aboutStage.show();
     }
 
     @FXML
