@@ -33,19 +33,11 @@ public class Log {
     }
 
     public Log filterByTag(String tag) {
-        ArrayList<String> filteredEntries = new ArrayList<>();
-        logEntries.forEach((entry) -> {
-            if (entry.contains("[" + tag + "]")) filteredEntries.add(entry);
-        });
-        return new Log(filteredEntries);
+        return filterByKeyword("[" + tag + "]");
     }
 
     public Log filterByTime(String time) {
-        ArrayList<String> filteredEntries = new ArrayList<>();
-        logEntries.forEach((entry) -> {
-            if (entry.contains("[" + time)) filteredEntries.add(entry);
-        });
-        return new Log(filteredEntries);
+        return filterByKeyword("[" + time);
     }
 
 }
