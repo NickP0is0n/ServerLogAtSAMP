@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import live.nickp0is0n.serverlogatsamp.models.FTPAccount;
 import live.nickp0is0n.serverlogatsamp.models.Log;
+import live.nickp0is0n.serverlogatsamp.network.FTPDownloader;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -135,36 +136,28 @@ public class Controller {
     @FXML
     void onReceiveLogsButtonClick(ActionEvent event) throws IOException {
         saveFtpAccountData();
-        FTPClient ftpClient = new FTPClient();
+        FTPDownloader downloader = new FTPDownloader(ftpServerTextField.getText(), ftpLoginTextField.getText(), ftpPasswordTextField.getText());
+        downloader.setOnFtpConnectionListener(() -> {
+            Platform.runLater(() -> {
+                setProgressBarState(ProgressBarState.ENABLED, "Подключение к FTP серверу");
+            });
+        });
+        downloader.setOnFtpLoginListener(() -> {
+            Platform.runLater(() -> {
+                setProgressBarState(ProgressBarState.ENABLED, "Авторизация на FTP сервере");
+            });
+        });
+        downloader.setOnFtpDownloadListener(() -> {
+            Platform.runLater(() -> {
+                setProgressBarState(ProgressBarState.ENABLED, "Загрузка файла логов");
+            });
+        });
         new Thread(() -> {
             try {
-                Platform.runLater(() -> {
-                    setProgressBarState(ProgressBarState.ENABLED, "Подключение к FTP серверу");
-                });
-                ftpClient.connect(ftpServerTextField.getText());
-                if (!FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) throw new Exception("Не удалось подключится к FTP серверу.");
-                System.out.println(ftpClient.getReplyString());
-
-                Platform.runLater(() -> {
-                    setProgressBarState(ProgressBarState.ENABLED, "Авторизация на FTP сервере");
-                });
-                ftpClient.login(ftpLoginTextField.getText(), ftpPasswordTextField.getText());
-                if (!FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) throw new Exception("Неправильный логин или пароль.");
-                System.out.println(ftpClient.getReplyString());
-                ftpClient.enterLocalPassiveMode();
-                System.out.println(ftpClient.getReplyString());
-
-                Platform.runLater(() -> {
-                    setProgressBarState(ProgressBarState.ENABLED, "Загрузка файла логов");
-                });
                 File logFile = new File("downloadedLogs/" + new Date().toString() + ".txt");
-                if (!logFile.exists()) logFile.createNewFile();
-                ftpClient.retrieveFile("server_log.txt", new FileOutputStream(logFile));
-                System.out.println(ftpClient.getReplyString());
-
-                ftpClient.disconnect();
-                System.out.println(ftpClient.getReplyString());
-
+                downloader.connect();
+                downloader.downloadFile("server_log.txt", logFile.getAbsolutePath());
+                downloader.close();
                 serverLog = new Log(logFile);
                 Platform.runLater(() -> {
                     setProgressBarState(ProgressBarState.DISABLED, "");
@@ -172,8 +165,8 @@ public class Controller {
                 });
             } catch (Exception e) {
                 try {
-                    ftpClient.disconnect();
-                } catch (IOException ioException) {
+                   downloader.close();
+                } catch (Exception ioException) {
                     ioException.printStackTrace();
                 }
                 e.printStackTrace();
@@ -187,7 +180,7 @@ public class Controller {
 
     @FXML
     void onCacheManagerMenuItemClick(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("cacheManager.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("cachemanager.fxml"));
         Parent root = loader.load();
         CacheManagerController controller = loader.getController();
         controller.setMainController(this);
