@@ -49,8 +49,16 @@ public class Controller {
     @FXML
     private Text progressBarDescription;
 
+    public void setServerLog(Log serverLog) {
+        this.serverLog = serverLog;
+    }
+
+    public Log getServerLog() {
+        return serverLog;
+    }
+
     private Log serverLog;
-    private File saveData = new File("savedata");
+    private final File saveData = new File("savedata");
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
@@ -104,9 +112,7 @@ public class Controller {
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Текстовые файлы (.txt)", "*.txt")); //фильтр файлов
         File logFile = chooser.showOpenDialog(new Stage()); //показ диалога на отдельной сцене
         if(logFile != null) {
-            progressBar.setVisible(true);
-            progressBarDescription.setText("Загрузка логов из файла");
-            progressBarDescription.setVisible(true);
+            setProgressBarState(ProgressBarState.ENABLED, "Загрузка логов из файла");
             new Thread(() -> {
                 try {
                     serverLog = new Log(logFile);
@@ -115,8 +121,7 @@ public class Controller {
                 }
                 Platform.runLater(() -> {
                     updateLogView(this.serverLog);
-                    progressBar.setVisible(false);
-                    progressBarDescription.setVisible(false);
+                    setProgressBarState(ProgressBarState.DISABLED, "");
                 });
             }).start();
         }
@@ -129,18 +134,14 @@ public class Controller {
         new Thread(() -> {
             try {
                 Platform.runLater(() -> {
-                    progressBar.setVisible(true);
-                    progressBarDescription.setText("Подключение к FTP серверу");
-                    progressBarDescription.setVisible(true);
+                    setProgressBarState(ProgressBarState.ENABLED, "Подключение к FTP серверу");
                 });
                 ftpClient.connect(ftpServerTextField.getText());
                 if (!FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) throw new Exception("Не удалось подключится к FTP серверу.");
                 System.out.println(ftpClient.getReplyString());
 
                 Platform.runLater(() -> {
-                    progressBar.setVisible(true);
-                    progressBarDescription.setText("Авторизация на FTP сервере");
-                    progressBarDescription.setVisible(true);
+                    setProgressBarState(ProgressBarState.ENABLED, "Авторизация на FTP сервере");
                 });
                 ftpClient.login(ftpLoginTextField.getText(), ftpPasswordTextField.getText());
                 if (!FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) throw new Exception("Неправильный логин или пароль.");
@@ -149,9 +150,7 @@ public class Controller {
                 System.out.println(ftpClient.getReplyString());
 
                 Platform.runLater(() -> {
-                    progressBar.setVisible(true);
-                    progressBarDescription.setText("Загрузка файла логов");
-                    progressBarDescription.setVisible(true);
+                    setProgressBarState(ProgressBarState.ENABLED, "Загрузка файла логов");
                 });
                 File logFile = new File("downloadedLogs/" + new Date().toString() + ".txt");
                 if (!logFile.exists()) logFile.createNewFile();
@@ -163,8 +162,7 @@ public class Controller {
 
                 serverLog = new Log(logFile);
                 Platform.runLater(() -> {
-                    progressBar.setVisible(false);
-                    progressBarDescription.setVisible(false);
+                    setProgressBarState(ProgressBarState.DISABLED, "");
                     updateLogView(serverLog);
                 });
             } catch (Exception e) {
@@ -175,16 +173,48 @@ public class Controller {
                 }
                 e.printStackTrace();
                 Platform.runLater(() -> {
-                    progressBar.setVisible(false);
-                    progressBarDescription.setVisible(false);
+                    setProgressBarState(ProgressBarState.DISABLED, "");
                     new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
                 });
             }
         }).start();
     }
 
-    private void updateLogView(Log serverLog) {
+    @FXML
+    void onCacheManagerMenuItemClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("cacheManager.fxml"));
+        Parent root = loader.load();
+        CacheManagerController controller = loader.getController();
+        controller.setMainController(this);
+        Stage cacheManagerStage = new Stage();
+        cacheManagerStage.setTitle("Менеджер кэша");
+        cacheManagerStage.setScene(new Scene(root, 500, 300));
+        cacheManagerStage.show();
+    }
+
+    @FXML
+    void onClearCacheMenuItemClick(ActionEvent event) {
+
+    }
+
+    void updateLogView(Log serverLog) {
         logDisplayView.setItems(FXCollections.observableArrayList(serverLog.getLogEntries()));
+    }
+
+    void setProgressBarState(ProgressBarState state, String description) {
+        switch (state) {
+            case ENABLED: {
+                progressBar.setVisible(true);
+                progressBarDescription.setVisible(true);
+                progressBarDescription.setText(description);
+                break;
+            }
+            case DISABLED: {
+                progressBar.setVisible(false);
+                progressBarDescription.setVisible(false);
+                break;
+            }
+        }
     }
 
     private void saveFtpAccountData() throws IOException {

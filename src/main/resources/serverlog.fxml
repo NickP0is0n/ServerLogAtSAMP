@@ -28,6 +28,12 @@
             <MenuItem mnemonicParsing="false" onAction="#onExitMenuItemClick" text="Выйти" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="Управление кэшем">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onCacheManagerMenuItemClick" text="Менеджер кэша..." />
+                  <MenuItem mnemonicParsing="false" onAction="#onClearCacheMenuItemClick" text="Очистить кэш" />
+              </items>
+            </Menu>
         <Menu mnemonicParsing="false" text="Помощь">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#onAboutMenuItemClick" text="О ServerLog@SAMP" />
