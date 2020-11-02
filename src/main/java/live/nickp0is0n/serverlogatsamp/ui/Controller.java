@@ -18,7 +18,10 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 public class Controller {
 
@@ -194,7 +197,13 @@ public class Controller {
 
     @FXML
     void onClearCacheMenuItemClick(ActionEvent event) {
-
+        Alert removalConfirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "Вы действительно хотите очистить кэш логов? Это действие не может быть отменено.");
+        Optional<ButtonType> buttonPressed = removalConfirmationAlert.showAndWait();
+        if (buttonPressed.isPresent() && buttonPressed.get().equals(ButtonType.OK)) {
+            File cacheDirectory = new File("downloadedLogs");
+            ArrayList<File> cacheFiles = new ArrayList(Arrays.asList(cacheDirectory.listFiles()));
+            cacheFiles.forEach(File::delete);
+        }
     }
 
     void updateLogView(Log serverLog) {
