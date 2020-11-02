@@ -65,6 +65,8 @@ public class Controller {
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
+        File cacheDirectory = new File("downloadedLogs");
+        if (!cacheDirectory.exists()) cacheDirectory.mkdir();
         loadFtpAccountData();
     }
 
