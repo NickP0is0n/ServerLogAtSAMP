@@ -3,6 +3,7 @@ package live.nickp0is0n.serverlogatsamp.models;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Log {
     private ArrayList<String> logEntries = new ArrayList<>();
@@ -21,7 +22,7 @@ public class Log {
     }
 
     public ArrayList<String> getLogEntries() {
-        return logEntries;
+        return (ArrayList<String>) logEntries.stream().filter(s -> !s.isEmpty()).collect(Collectors.toList());
     }
 
     public Log filterByKeyword(String keyword) {
