@@ -15,8 +15,6 @@ import javafx.stage.StageStyle;
 import live.nickp0is0n.serverlogatsamp.models.FTPAccount;
 import live.nickp0is0n.serverlogatsamp.models.Log;
 import live.nickp0is0n.serverlogatsamp.network.FTPDownloader;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class Controller {
     private TextField ftpServerTextField;
 
     @FXML
-    private TextField filterTagTextField;
+    private ChoiceBox<String> tagChoiceBox;
 
     @FXML
     private TextField filterTimeTextField;
@@ -99,8 +97,8 @@ public class Controller {
                     .showAndWait();
         }
         Log filteredLog = serverLog;
-        if (!filterTagTextField.getText().isEmpty()) {
-            filteredLog = filteredLog.filterByTag(filterTagTextField.getText());
+        if (tagChoiceBox.getSelectionModel().getSelectedIndex() == 0) {
+            filteredLog = filteredLog.filterByTag(tagChoiceBox.getSelectionModel().getSelectedItem());
         }
         if (!filterTimeTextField.getText().isEmpty()) {
             filteredLog = filteredLog.filterByTime(filterTimeTextField.getText());
