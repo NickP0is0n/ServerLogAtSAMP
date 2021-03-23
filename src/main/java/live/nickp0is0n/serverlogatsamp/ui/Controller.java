@@ -100,9 +100,6 @@ public class Controller {
         if (tagChoiceBox.getSelectionModel().getSelectedIndex() != 0) {
             filteredLog = filteredLog.filterByTag(tagChoiceBox.getSelectionModel().getSelectedItem());
         }
-        else {
-            filteredLog = filteredLog.filterByTag("");
-        }
         if (!filterTimeTextField.getText().isEmpty()) {
             filteredLog = filteredLog.filterByTime(filterTimeTextField.getText());
         }
