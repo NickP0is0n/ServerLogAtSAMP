@@ -3,6 +3,9 @@ package live.nickp0is0n.serverlogatsamp.models;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Log {
@@ -39,6 +42,24 @@ public class Log {
 
     public Log filterByTime(String time) {
         return filterByKeyword("[" + time);
+    }
+
+    public List<String> retrieveTags() {
+        List<String> tags = new ArrayList<>();
+        tags.add("-");
+        logEntries.forEach((String entry) -> {
+            String pattern = "\\[.*?]";
+            Pattern compiledPattern = Pattern.compile(pattern);
+            Matcher patternMatcher = compiledPattern.matcher(entry);
+            patternMatcher.find(); //ignore timestamp
+            if (patternMatcher.find()) {
+                String matchedString = entry.substring(patternMatcher.start() + 1, patternMatcher.end() - 1);
+                if (!tags.contains(matchedString)) {
+                    tags.add(matchedString);
+                }
+            }
+        });
+        return tags;
     }
 
 }

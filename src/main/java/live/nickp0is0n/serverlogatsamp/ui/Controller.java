@@ -126,6 +126,8 @@ public class Controller {
                 Platform.runLater(() -> {
                     updateLogView(this.serverLog);
                     setProgressBarState(ProgressBarState.DISABLED, "");
+                    tagChoiceBox.setDisable(false);
+                    tagChoiceBox.setItems(FXCollections.observableArrayList(serverLog.retrieveTags()));
                 });
             }).start();
         }
@@ -160,6 +162,8 @@ public class Controller {
                 Platform.runLater(() -> {
                     setProgressBarState(ProgressBarState.DISABLED, "");
                     updateLogView(serverLog);
+                    tagChoiceBox.setDisable(false);
+                    tagChoiceBox.setItems(FXCollections.observableArrayList(serverLog.retrieveTags()));
                 });
             } catch (Exception e) {
                 try {
