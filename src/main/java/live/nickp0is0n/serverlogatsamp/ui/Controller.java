@@ -97,8 +97,11 @@ public class Controller {
                     .showAndWait();
         }
         Log filteredLog = serverLog;
-        if (tagChoiceBox.getSelectionModel().getSelectedIndex() == 0) {
+        if (tagChoiceBox.getSelectionModel().getSelectedIndex() != 0) {
             filteredLog = filteredLog.filterByTag(tagChoiceBox.getSelectionModel().getSelectedItem());
+        }
+        else {
+            filteredLog = filteredLog.filterByTag("");
         }
         if (!filterTimeTextField.getText().isEmpty()) {
             filteredLog = filteredLog.filterByTime(filterTimeTextField.getText());
@@ -126,8 +129,7 @@ public class Controller {
                 Platform.runLater(() -> {
                     updateLogView(this.serverLog);
                     setProgressBarState(ProgressBarState.DISABLED, "");
-                    tagChoiceBox.setDisable(false);
-                    tagChoiceBox.setItems(FXCollections.observableArrayList(serverLog.retrieveTags()));
+                    updateTagSelectionBox(serverLog);
                 });
             }).start();
         }
@@ -162,8 +164,7 @@ public class Controller {
                 Platform.runLater(() -> {
                     setProgressBarState(ProgressBarState.DISABLED, "");
                     updateLogView(serverLog);
-                    tagChoiceBox.setDisable(false);
-                    tagChoiceBox.setItems(FXCollections.observableArrayList(serverLog.retrieveTags()));
+                    updateTagSelectionBox(serverLog);
                 });
             } catch (Exception e) {
                 try {
@@ -201,6 +202,11 @@ public class Controller {
             ArrayList<File> cacheFiles = new ArrayList(Arrays.asList(cacheDirectory.listFiles()));
             cacheFiles.forEach(File::delete);
         }
+    }
+
+    void updateTagSelectionBox(Log serverLog) {
+        tagChoiceBox.setDisable(false);
+        tagChoiceBox.setItems(FXCollections.observableArrayList(serverLog.retrieveTags()));
     }
 
     void updateLogView(Log serverLog) {

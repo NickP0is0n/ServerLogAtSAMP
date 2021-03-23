@@ -62,6 +62,7 @@ public class CacheManagerController {
                 Platform.runLater(() -> {
                     mainController.updateLogView(mainController.getServerLog());
                     mainController.setProgressBarState(ProgressBarState.DISABLED, "");
+                    mainController.updateTagSelectionBox(mainController.getServerLog());
                 });
             }).start();
         }
