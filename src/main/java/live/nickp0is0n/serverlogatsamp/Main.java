@@ -10,9 +10,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("serverlog.fxml"));
+        ClassLoader loader = getClass().getClassLoader();
+        Parent root = FXMLLoader.load(loader.getResource("serverlog.fxml"));
         primaryStage.setTitle("ServerLog@SAMP");
-        primaryStage.setScene(new Scene(root, 740, 400));
+        Scene mainScene = new Scene(root, 740, 400);
+        mainScene.getStylesheets().add(loader.getResource("styles.css").toExternalForm());
+        primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 

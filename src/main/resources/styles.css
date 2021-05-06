@@ -1,0 +1,64 @@
+.root {
+	-fx-font-family: "Helvetica Neue";
+}
+
+.anchor-pane {
+	-fx-background-color: #EBF3F6;
+}
+
+.button {
+	-fx-background-color: #6447F7;
+	-fx-text-fill: white;
+	-fx-background-radius: 15;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 0);
+}
+
+.button:pressed {
+	-fx-effect: pausetransition(1);
+	-fx-background-color: #1C0B71;
+}
+
+.menu-bar {
+	-fx-background-color: #FFFFFF;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 0);
+}
+.menu-item {
+	-fx-background-radius: 5;
+}
+.text-field {
+	-fx-background-radius: 10;
+}
+
+.text-field:focused {
+	-fx-faint-focus-color: #039ED3;
+}
+
+.choice-box {
+	-fx-background-radius: 10;
+}
+
+.titled-pane {
+	-fx-background-color: #FFFFFF;
+	-fx-background-radius: 15;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 0);
+	-fx-box-border: transparent;
+}
+
+.titled-pane > .title 
+{
+    -fx-background-color: #EBF3F6;
+    -fx-background-radius: 0;
+    
+    -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
+}
+
+.titled-pane-header {
+	-fx-background-color: #FFFFFF;
+	-fx-background-radius: 15;
+}
+
+.list-view {
+	-fx-box-border: transparent;
+	-fx-background-radius: 15;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 0);
+}
