@@ -16,6 +16,7 @@ public class Main extends Application {
         Scene mainScene = new Scene(root, 740, 400);
         mainScene.getStylesheets().add(loader.getResource("styles.css").toExternalForm());
         primaryStage.setScene(mainScene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

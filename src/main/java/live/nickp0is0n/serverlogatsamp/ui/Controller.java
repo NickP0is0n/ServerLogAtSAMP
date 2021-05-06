@@ -71,11 +71,16 @@ public class Controller {
 
     @FXML
     void onAboutMenuItemClick(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("about.fxml"));
+        ClassLoader classLoader = getClass().getClassLoader();
+        FXMLLoader loader = new FXMLLoader(classLoader.getResource("about.fxml"));
         Parent root = loader.load();
+
+        Scene aboutScene = new Scene(root, 600, 400);
+        aboutScene.getStylesheets().add(classLoader.getResource("versoninfo_styles.css").toExternalForm());
+
         Stage aboutStage = new Stage();
         aboutStage.setTitle("О ServerLog@SAMP");
-        aboutStage.setScene(new Scene(root, 600, 400));
+        aboutStage.setScene(aboutScene);
         aboutStage.initStyle(StageStyle.UNDECORATED);
         aboutStage.show();
     }
@@ -180,13 +185,18 @@ public class Controller {
 
     @FXML
     void onCacheManagerMenuItemClick(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("cachemanager.fxml"));
+        ClassLoader classLoader = getClass().getClassLoader();
+        FXMLLoader loader = new FXMLLoader(classLoader.getResource("cachemanager.fxml"));
         Parent root = loader.load();
         CacheManagerController controller = loader.getController();
         controller.setMainController(this);
+
+        Scene cacheManagerScene = new Scene(root, 500, 300);
+        cacheManagerScene.getStylesheets().add(classLoader.getResource("styles.css").toExternalForm());
+
         Stage cacheManagerStage = new Stage();
         cacheManagerStage.setTitle("Менеджер кэша");
-        cacheManagerStage.setScene(new Scene(root, 500, 300));
+        cacheManagerStage.setScene(cacheManagerScene);
         cacheManagerStage.show();
     }
 

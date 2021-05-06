@@ -1,0 +1,18 @@
+.root {
+	-fx-font-family: "Helvetica";
+	-fx-font-smoothing-type: Grey;
+	-fx-font-size: 13px;
+}
+
+.title {
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+
+.anchor-pane {
+	-fx-background-color: #FFFFFF;
+}
+
+.copyright {
+	-fx-font-size: 11px;
+}
